@@ -63,6 +63,12 @@ mysql57-community:
   pkg.installed:
     - refresh: True
 
+/etc/my.cnf:
+  file.managed:
+    - source: salt://files/mycnf
+    - template: jinja
+    - mode: 644
+
 mysql-init:
   cmd.run:
     - name: 'mysqld --initialize-insecure --user=mysql'
