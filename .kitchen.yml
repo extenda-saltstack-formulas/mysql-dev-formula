@@ -1,0 +1,25 @@
+---
+driver:
+  name: vagrant
+
+platforms:
+  - name: centos-7.3
+
+provisioner:
+  name: salt_solo
+  is_file_root: true
+  state_top:
+    base:
+      "*":
+        - mysql
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - mysql
+
+suites:
+  - name: oracle-mysql-56
+    provisioner:
+      pillars-from-files:
+        mysql.sls: tests/pillar/mysql-community-56.sls
