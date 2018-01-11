@@ -1,5 +1,6 @@
 {% set mysql_repo = pillar.mysql.community.get('repo', 'mysql57-community') %}
 {% set mysql_version = pillar.mysql.community.get('version', 'mysql-community-server.x86_64') %}
+{% set mysql_init = pillar.mysql.community.get('init', 'mysqld --initialize-insecure --user=mysql') %}
 
 {% if grains['os_family'] == 'RedHat' %}
   {% if grains['osmajorrelease']|int == 5 %}
@@ -65,13 +66,14 @@ mysql57-community:
 
 /etc/my.cnf:
   file.managed:
-    - source: salt://files/mycnf
+    - source: salt://files/my.cnf
     - template: jinja
     - mode: 644
 
 mysql-init:
   cmd.run:
-    - name: 'mysqld --initialize-insecure --user=mysql'
+    - name: {{  mysql_init }}
+    - unless: 'mysqlshow -u root -h localhost mysql'
 
 mysqld:
   service.running:
