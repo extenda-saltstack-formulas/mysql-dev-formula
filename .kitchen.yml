@@ -10,6 +10,7 @@ provisioner:
   is_file_root: true
   salt_bootstrap_url: https://bootstrap.saltstack.com
   salt_bootstrap_options: -X -p git -p curl
+  log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'info' %>
   salt_copy_filter:
     - .git
     - .gitignore
