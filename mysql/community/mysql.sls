@@ -66,6 +66,17 @@ mysql57-community:
   pkg.installed:
     - refresh: True
 
+mysql-remove-old:
+  cmd.run:
+    - name: 'rm -f /var/log/mysqld.log'
+
+/var/log/mysql:
+  file.directory:
+    - user: mysql
+    - group: mysql
+    - dir_mode: 644
+    - makedirs: True
+
 mysql-init:
   cmd.run:
     - name: {{  mysql_init }}
