@@ -62,9 +62,9 @@ mysql57-community:
     - enable: True
 {% endif %}
 
-{{ mysql_version }}:
-  pkg.installed:
-    - refresh: True
+mysql-community-server.x86_64:
+    pkg.installed:
+        - version: {{ mysql_version }}
 
 mysql-remove-old:
   cmd.run:
